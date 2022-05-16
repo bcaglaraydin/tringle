@@ -13,4 +13,6 @@ app.use(bodyParser.json());
 app.use("/account", accountRouter);
 app.use("/", transactionRouter);
 
-app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
+const port = process.env.PORT || 5050;
+
+app.listen(port, () => console.log(`Server running on port: http://localhost:${port}`));

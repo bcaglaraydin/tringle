@@ -5,18 +5,17 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "mocha",
     "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai-http": "^4.3.0",
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "jest": "^28.1.0",
-    "nodemon": "^2.0.4",
-    "supertest": "^6.2.3"
+    "nodemon": "^2.0.4"
   }
 }

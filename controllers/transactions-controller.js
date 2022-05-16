@@ -17,26 +17,34 @@ export const makePayment = (req, res) => {
 
     if (!sender) {
         res.status(400).send("Error: Sender Account does not exist!")
+        return;
     }
     if (!receiver) {
-        res.status(400).send("Error: Sender Account does not exist!")
+        res.status(400).send("Error: Receiver Account does not exist!")
+        return;
+    }
+    if (isNaN(amount)) {
+        res.status(400).send("Error: amount should be a decimal!");
+        return;
     }
     if (sender.accountType != "individual" || receiver.accountType != "corporate") {
         res.status(400).send("Error: Payments can only be wired from an individual account to a corporate account!")
+        return;
     }
-    if (sender.balance < amount) {
+    if (parseFloat(sender.balance) < parseFloat(amount)) {
         res.status(400).send("Error: Insufficent balance!")
+        return;
     }
 
     accounts = accounts.map(acc =>
         acc.accountNumber === receiver.accountNumber
-            ? { ...acc, balance: parseInt(acc.balance) + parseInt(amount) }
+            ? { ...acc, balance: (parseFloat(acc.balance) + parseFloat(amount)).toFixed(2) }
             : acc
     );
 
     accounts = accounts.map(acc =>
         acc.accountNumber === sender.accountNumber
-            ? { ...acc, balance: parseInt(acc.balance) - parseInt(amount) }
+            ? { ...acc, balance: (parseFloat(acc.balance) - parseFloat(amount)).toFixed(2) }
             : acc
     );
 
@@ -54,14 +62,21 @@ export const makeDeposit = (req, res) => {
 
     if (!account) {
         res.status(400).send("Error: Account does not exist!")
+        return;
     }
     if (account.accountType != "individual") {
         res.status(400).send("Error: accountType should be individual!")
+        return;
+    }
+
+    if (isNaN(amount)) {
+        res.status(400).send("Error: amount should be a decimal!");
+        return;
     }
 
     accounts = accounts.map(acc =>
-        acc.accountNumber === req.body.accountNumber
-            ? { ...acc, balance: parseInt(acc.balance) + parseInt(amount) }
+        acc.accountNumber === account.accountNumber
+            ? { ...acc, balance: (parseFloat(acc.balance) + parseFloat(amount)).toFixed(2) }
             : acc
     );
 
@@ -79,17 +94,24 @@ export const makeWithdraw = (req, res) => {
 
     if (!account) {
         res.status(400).send("Error: Account does not exist!")
+        return;
+    }
+    if (isNaN(amount)) {
+        res.status(400).send("Error: amount should be a decimal!");
+        return;
     }
     if (account.accountType != "individual") {
         res.status(400).send("Error: accountType should be individual!")
+        return;
     }
-    if (account.balance < amount) {
+    if (parseFloat(account.balance) < parseFloat(amount)) {
         res.status(400).send("Error: Insufficent balance!")
+        return;
     }
 
     accounts = accounts.map(acc =>
-        acc.accountNumber === accountNumber
-            ? { ...acc, balance: parseInt(acc.balance) - parseInt(amount) }
+        acc.accountNumber === account.accountNumber
+            ? { ...acc, balance: (parseFloat(acc.balance) - parseFloat(amount)).toFixed(2) }
             : acc
     );
 

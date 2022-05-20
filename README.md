@@ -1,7 +1,8 @@
-How to run the API using git
+# How to run the API using git
 # Clone the repo
+```
 git clone https://github.com/bcaglaraydin/tringle-payment-api
-
+```
 # Install dependencies
 npm install
 

@@ -1,20 +1,29 @@
 # How to run the API using git
-# Clone the repo
+Clone the repo
+
 ```
 git clone https://github.com/bcaglaraydin/tringle-payment-api
 ```
-# Install dependencies
+Install dependencies
+```
 npm install
+```
 
-# Run
+Run
+```
 npm start
+```
 
-How to run the API using Docker
-# Pull the Docker Repo
+# How to run the API using Docker
+Pull the Docker Repo
+
+```
 docker pull https://hub.docker.com/r/65edfd3b/tringleapi
+```
 
-
-# Run
+Run
+```
 docker run 65edfd3b/tringleapi
+```
 
 
